@@ -1,0 +1,37 @@
+{
+  "name": "fvconnector",
+  "proxy": "127.0.0.1:5000",
+  "version": "1.0.0",
+  "description": "connecting frugivores worldwide",
+  "main": "server.js",
+  "type": "module",
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "author": "Agamotto All-Seeing",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.9.0",
+    "gravatar": "^1.8.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.8",
+    "normalize": "^0.3.1",
+    "normalize-url": "^5.3.0",
+    "request": "^2.88.2"
+  }
+}
