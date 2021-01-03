@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const ProfileItem = ({
   profile: {
-    user: { _id, firstName, middleName, lastName, avatar },
+    user: { _id, firstName, middleName, lastName, avatar, isAdmin },
     status,
     company,
     city,
@@ -18,7 +18,7 @@ const ProfileItem = ({
       <div>
         <h2>
           {firstName} {middleName && middleName} {lastName}{' '}
-          {user.isAdmin && ' | Admin'}
+          {isAdmin && ' | Admin'}
         </h2>
         <p>** {status} **</p>
         <p>{company && <span> Working at {company}</span>}</p>
