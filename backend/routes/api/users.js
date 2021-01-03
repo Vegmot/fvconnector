@@ -63,6 +63,7 @@ router.post(
         email,
         avatar,
         password,
+        isAdmin,
       });
 
       // encrypt password
