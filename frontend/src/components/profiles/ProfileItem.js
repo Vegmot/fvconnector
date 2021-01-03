@@ -17,11 +17,23 @@ const ProfileItem = ({
       <img src={avatar} alt={firstName} className='round-img' />
       <div>
         <h2>
-          {firstName} {middleName && middleName} {lastName}{' '}
-          {isAdmin && ' | Admin'}
+          {isAdmin
+            ? '| ADMIN |'
+            : middleName
+            ? firstName + ' ' + middleName + ' ' + lastName
+            : firstName + ' ' + lastName}
         </h2>
-        <p>** {status} **</p>
-        <p>{company && <span> Working at {company}</span>}</p>
+        <p>
+          <i className='fas fa-seedling'></i> {status}
+        </p>
+        <p>
+          {company && (
+            <>
+              <i className='fas fa-seedling'></i>
+              <span> Working at {company}</span>
+            </>
+          )}
+        </p>
         <p className='my-1'>{city ? city + ', ' + state : state}</p>
         <Link to={`/profile/${_id}`} className='btn btn-primary'>
           View details
