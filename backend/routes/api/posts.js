@@ -176,7 +176,7 @@ router.post(
         user: req.user.id,
       };
 
-      post.comments.unshift(newComment);
+      post.comments.push(newComment);
 
       await post.save();
 

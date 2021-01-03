@@ -19,9 +19,8 @@ const ProfileItem = ({
         <h2>
           {firstName} {middleName && middleName} {lastName}
         </h2>
-        <p>
-          {status} {company && <span> at {company}</span>}
-        </p>
+        <p>** {status} **</p>
+        <p>{company && <span> Working at {company}</span>}</p>
         <p className='my-1'>{city ? city + ', ' + state : state}</p>
         <Link to={`/profile/${_id}`} className='btn btn-primary'>
           View details
