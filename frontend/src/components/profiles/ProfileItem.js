@@ -17,7 +17,8 @@ const ProfileItem = ({
       <img src={avatar} alt={firstName} className='round-img' />
       <div>
         <h2>
-          {firstName} {middleName && middleName} {lastName}
+          {firstName} {middleName && middleName} {lastName}{' '}
+          {user.isAdmin && ' | Admin'}
         </h2>
         <p>** {status} **</p>
         <p>{company && <span> Working at {company}</span>}</p>
