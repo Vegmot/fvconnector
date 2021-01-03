@@ -38,7 +38,7 @@ export const addLike = id => async dispatch => {
 
     dispatch({
       type: UPDATE_LIKES,
-      payload: { id, likes: res.data.likes },
+      payload: { id, likes: res.data },
     });
   } catch (error) {
     dispatch({
@@ -58,7 +58,7 @@ export const removeLike = id => async dispatch => {
 
     dispatch({
       type: UPDATE_LIKES,
-      payload: { id, likes: res.data.likes },
+      payload: { id, likes: res.data },
     });
   } catch (error) {
     dispatch({
