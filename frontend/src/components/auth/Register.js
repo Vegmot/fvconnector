@@ -56,6 +56,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={firstName}
             onChange={changeHandler}
           />
+          <small className='form-text'>* Required field</small>
         </div>
 
         <div className='form-group'>
@@ -77,6 +78,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={lastName}
             onChange={changeHandler}
           />
+          <small className='form-text'>* Required field</small>
         </div>
 
         <div className='form-group'>
@@ -87,6 +89,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={email}
             onChange={changeHandler}
           />
+          <small className='form-text'>* Required field</small>
           <small className='form-text'>
             This site uses Gravatar so if you want a profile image, use a
             Gravatar email
@@ -102,6 +105,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             onChange={changeHandler}
             minLength='6'
           />
+          <small className='form-text'>* Required field</small>
         </div>
 
         <div className='form-group'>
@@ -113,7 +117,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             onChange={changeHandler}
             minLength='6'
           />
+          <small className='form-text'>* Required field</small>
         </div>
+
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>
       <p className='my-1'>

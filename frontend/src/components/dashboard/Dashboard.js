@@ -27,14 +27,7 @@ const Dashboard = ({
         <i className='fas fa-user'></i> Welcome, {user.firstName}{' '}
         {user.middleName && user.middleName} {user.lastName}!
       </p>
-      {profile === null ? (
-        <>
-          <p>I don't see your profile. Do you want to add some?</p>
-          <Link to='/create-profile' className='btn btn-primary my-1'>
-            Create profile
-          </Link>
-        </>
-      ) : (
+      {profile !== null ? (
         <>
           <DashboardActions />
           <Experience experience={profile.experience} />
@@ -45,6 +38,13 @@ const Dashboard = ({
               <i className='fas fa-user-minus'></i> Delete my account
             </button>
           </div>
+        </>
+      ) : (
+        <>
+          <p>I don't see your profile. Do you want to add some?</p>
+          <Link to='/create-profile' className='btn btn-primary my-1'>
+            Create profile
+          </Link>
         </>
       )}
     </>
