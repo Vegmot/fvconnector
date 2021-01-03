@@ -6,6 +6,10 @@ import { addLike, removeLike, deletePost } from '../../actions/postAction';
 import formatDate from '../../utils/formatDate';
 
 const PostItem = ({
+  addLike,
+  removeLike,
+  deletePost,
+  auth,
   post: {
     _id,
     text,
@@ -18,10 +22,6 @@ const PostItem = ({
     comments,
     date,
   },
-  auth,
-  addLike,
-  removeLike,
-  deletePost,
   showActions,
 }) => {
   return (
