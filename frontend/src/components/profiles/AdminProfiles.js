@@ -29,7 +29,7 @@ const AdminProfiles = ({
   );
 };
 
-Profiles.propTypes = {
+AdminProfiles.propTypes = {
   getProfiles: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
