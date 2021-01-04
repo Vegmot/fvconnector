@@ -14,7 +14,13 @@ router.get('/myprofile', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({
       user: req.user.id,
-    }).populate('user', ['firstName', 'middleName', 'lastName', 'avatar']);
+    }).populate('user', [
+      'firstName',
+      'middleName',
+      'lastName',
+      'avatar',
+      'isAdmin',
+    ]);
 
     if (!profile) {
       return res.status(400).json({
@@ -144,6 +150,7 @@ router.get('/', async (req, res) => {
       'middleName',
       'lastName',
       'avatar',
+      'isAdmin',
     ]);
     res.json(profiles);
   } catch (error) {
@@ -159,7 +166,13 @@ router.get('/user/:user_id', async (req, res) => {
   try {
     const profile = await Profile.findOne({
       user: req.params.user_id,
-    }).populate('user', ['firstName', 'middleName', 'lastName', 'avatar']);
+    }).populate('user', [
+      'firstName',
+      'middleName',
+      'lastName',
+      'avatar',
+      'isAdmin',
+    ]);
 
     if (!profile) {
       return res.status(404).json({
