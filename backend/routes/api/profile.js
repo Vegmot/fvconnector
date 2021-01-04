@@ -143,7 +143,7 @@ router.post(
 // GET api/profile
 // Get all profiles
 // public
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const profiles = await Profile.find().populate('user', [
       'firstName',
@@ -157,6 +157,14 @@ router.get('/', async (req, res) => {
     console.error(error.message);
     res.status(500).send('Server error');
   }
+});
+
+// GET api/profile/admin
+// Get all profiles - admin
+// private/admin
+router.get('/admin', [auth, admin], async (req, res) => {
+  // @todo
+  console.log('Admin - get users!');
 });
 
 // GET api/profile/user/:user_id

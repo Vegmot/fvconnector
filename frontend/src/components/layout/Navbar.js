@@ -21,7 +21,7 @@ const Navbar = ({ auth: { isAuthenticated, user }, logout }) => {
       </li>
       {user && user.isAdmin && (
         <li>
-          <Link>
+          <Link to='/admin/profiles'>
             <i className='fas fa-seedling'></i>{' '}
             <span className='hide-sm'>Manage users</span>
           </Link>
