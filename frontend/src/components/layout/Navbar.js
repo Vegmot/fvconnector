@@ -19,7 +19,7 @@ const Navbar = ({ auth: { isAuthenticated, user }, logout }) => {
           <span className='hide-sm'>Dashboard</span>
         </Link>
       </li>
-      {user.isAdmin && (
+      {user && user.isAdmin && (
         <li>
           <Link>
             <i className='fas fa-seedling'></i>{' '}

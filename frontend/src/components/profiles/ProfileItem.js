@@ -17,7 +17,7 @@ const ProfileItem = ({
       <img src={avatar} alt={firstName} className='round-img' />
       <div>
         <h2>
-          {isAdmin
+          {user && isAdmin
             ? '| ADMIN |'
             : middleName
             ? firstName + ' ' + middleName + ' ' + lastName
