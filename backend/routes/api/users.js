@@ -4,6 +4,7 @@ import { check, validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import gravatar from 'gravatar';
+import { auth } from '../../middleware/auth.js';
 import User from '../../models/User.js';
 import normalize from 'normalize-url';
 import dotenv from 'dotenv';
@@ -63,7 +64,6 @@ router.post(
         email,
         avatar,
         password,
-        isAdmin,
       });
 
       // encrypt password
@@ -94,5 +94,27 @@ router.post(
     }
   }
 );
+
+// GET api/admin/users
+// Get all users - admin
+// private/admin
+router.get('/admin', auth, async (req, res) => {
+  try {
+    const users = await User.find().populate('user', [
+      'firstName',
+      'middleName',
+      'lastName',
+      'email',
+      'avatar',
+      'date',
+      'isAdmin',
+    ]);
+
+    res.json(users);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
 
 export default router;

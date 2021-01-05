@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { auth, admin } from '../../middleware/auth.js';
+import { auth } from '../../middleware/auth.js';
 import User from '../../models/User.js';
 import { check, validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';

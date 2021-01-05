@@ -17,7 +17,7 @@ const Posts = ({ getPosts, post: { loading, posts } }) => {
     <>
       <h1 className='large text-primary'>Posts</h1>
       <p className='lead'>
-        <i className='fas fa-user'></i> Welcome to the community!
+        <i className='fas fa-user-check'></i> Welcome to the community!
       </p>
       <PostForm />
       <div className='posts'>

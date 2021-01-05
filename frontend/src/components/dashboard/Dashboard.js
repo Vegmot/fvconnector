@@ -24,7 +24,7 @@ const Dashboard = ({
     <>
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
-        <i className='fas fa-user'></i> Welcome, {user.firstName}{' '}
+        <i className='fas fa-user-check'></i> Welcome, {user.firstName}{' '}
         {user.middleName && user.middleName} {user.lastName}!
       </p>
       {profile !== null ? (

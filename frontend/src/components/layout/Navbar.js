@@ -8,20 +8,26 @@ const Navbar = ({ auth: { isAuthenticated, user }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to='/profiles'>FV lovers</Link>
+        <Link to='/profiles'>
+          <i className='fas fa-users'></i>{' '}
+          <span className='hide-sm'>FV lovers</span>
+        </Link>
       </li>
       <li>
-        <Link to='/posts'>Posts</Link>
+        <Link to='/posts'>
+          <i className='far fa-comments'></i>{' '}
+          <span className='hide-sm'>Posts</span>
+        </Link>
       </li>
       <li>
         <Link to='/dashboard'>
-          <i className='fas fa-user'></i>{' '}
+          <i className='fas fa-user-edit'></i>{' '}
           <span className='hide-sm'>Dashboard</span>
         </Link>
       </li>
       {user && user.isAdmin && (
         <li>
-          <Link to='/profiles/admin'>
+          <Link to='/admin/users'>
             <i className='fas fa-seedling'></i>{' '}
             <span className='hide-sm'>Manage users</span>
           </Link>

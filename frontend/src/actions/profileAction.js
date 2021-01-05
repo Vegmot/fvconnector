@@ -7,6 +7,10 @@ import {
   UPDATE_PROFILE,
   CLEAR_PROFILE,
   DELETE_ACCOUNT,
+  ADMIN_GET_USERS,
+  ADMIN_USERS_ERROR,
+  ADMIN_GET_PROFILES,
+  ADMIN_PROFILES_ERROR,
 } from './types';
 
 // get current user's profile
@@ -43,6 +47,48 @@ export const getProfiles = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// get all profiles / admin
+export const adminGetProfiles = () => async dispatch => {
+  dispatch({ type: CLEAR_PROFILE });
+
+  try {
+    const res = await axios.get('/api/profiles/admin');
+
+    dispatch({
+      type: ADMIN_GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_PROFILES_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// get all users / admin
+export const adminGetUsers = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/users/admin');
+
+    dispatch({
+      type: ADMIN_GET_USERS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_USERS_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,

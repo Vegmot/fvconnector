@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import { check, validationResult } from 'express-validator';
-import { auth, admin } from '../../middleware/auth.js';
+import { auth } from '../../middleware/auth.js';
 import User from '../../models/User.js';
 import Post from '../../models/Post.js';
 

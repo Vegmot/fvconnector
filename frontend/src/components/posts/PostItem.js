@@ -69,7 +69,7 @@ const PostItem = ({
                 )}
               </Link>
 
-              {!auth.loading && user === auth.user._id && (
+              {!auth.loading && (user === auth.user._id || auth.user.isAdmin) && (
                 <button
                   type='button'
                   className='btn btn-danger'

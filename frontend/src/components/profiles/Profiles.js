@@ -21,9 +21,9 @@ const Profiles = ({
           <Spinner />
         ) : (
           <>
-            <h1 className='large text-primary'>All FV lovers</h1>
+            <h1 className='large text-primary'>All Fruit & Veggie lovers</h1>
             <p className='lead'>
-              <i className='fab fa-connectdevelop'></i> Browse and connect with
+              <i className='fas fa-network-wired'></i> Browse and connect with
               others
             </p>
             <div className='profiles'>

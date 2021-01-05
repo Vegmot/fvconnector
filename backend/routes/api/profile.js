@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import normalize from 'normalize-url';
-import { auth, admin } from '../../middleware/auth.js';
+import { auth } from '../../middleware/auth.js';
 import User from '../../models/User.js';
 import Profile from '../../models/Profile.js';
 import Post from '../../models/Post.js';
@@ -145,13 +145,16 @@ router.post(
 // public
 router.get('/', auth, async (req, res) => {
   try {
-    const profiles = await Profile.find().populate('user', [
+    const users = await Profile.find().populate('user', [
       'firstName',
       'middleName',
       'lastName',
       'avatar',
       'isAdmin',
     ]);
+    const profiles = await Profile.find();
+
+    res.json(users);
     res.json(profiles);
   } catch (error) {
     console.error(error.message);
@@ -159,13 +162,19 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// GET api/profile/admin
+/* // GET api/admin/profiles
 // Get all profiles - admin
 // private/admin
-router.get('/admin', [auth, admin], async (req, res) => {
-  // @todo
-  console.log('Admin - get users!');
-});
+router.get('/admin', auth, async (req, res) => {
+  try {
+    const profiles = await Profile.find();
+
+    res.json(profiles);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+}); */
 
 // GET api/profile/user/:user_id
 // Get a certain user's profile by id
