@@ -20,8 +20,8 @@ const Profile = ({ match, getProfileById, profile: { profile }, auth }) => {
         <Spinner />
       ) : (
         <>
-          <Link to='/profiles' className='btn btn-light'>
-            Back to Profiles
+          <Link to='/users' className='btn btn-light'>
+            Back to Users
           </Link>
           {auth.isAuthenticated && auth.user.isAdmin && (
             <Link to='/admin/users' className='btn btn-dark'>

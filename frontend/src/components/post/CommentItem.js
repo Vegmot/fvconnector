@@ -19,10 +19,14 @@ const CommentItem = ({
             <img
               className='round-img'
               src={avatar}
-              alt={`${firstName}'s profile avatar`}
+              alt={firstName ? `${firstName}'s profile avatar` : 'Deleted user'}
             />
             <h4>
-              {firstName} {middleName && middleName} {lastName}
+              {firstName
+                ? middleName
+                  ? firstName + ' ' + middleName + ' ' + lastName
+                  : firstName + ' ' + lastName
+                : 'Deleted user'}
             </h4>
           </Link>
         </div>

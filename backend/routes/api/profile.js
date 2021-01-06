@@ -145,16 +145,8 @@ router.post(
 // public
 router.get('/', auth, async (req, res) => {
   try {
-    const users = await Profile.find().populate('user', [
-      'firstName',
-      'middleName',
-      'lastName',
-      'avatar',
-      'isAdmin',
-    ]);
     const profiles = await Profile.find();
 
-    res.json(users);
     res.json(profiles);
   } catch (error) {
     console.error(error.message);
@@ -207,25 +199,27 @@ router.get('/user/:user_id', async (req, res) => {
 // DELETE api/profile
 // Delete a user, profile and posts by id
 // private
-router.delete('/', auth, async (req, res) => {
+router.delete('/user/:user_id', auth, async (req, res) => {
   try {
-    // remove user's posts
-    // remove profile
-    // remove user
-    await Promise.all([
-      Post.deleteMany({
-        user: req.user.id,
-      }),
-      Profile.findOneAndRemove({
-        user: req.user.id,
-      }),
-      User.findOneAndRemove({
-        _id: req.user.id,
-      }),
-    ]);
+    /* // Remove user posts
+    I would rather keep the posts even if the user gets deleted
+    await Post.deleteMany({ user: req.user.id }); */
+
+    // check if the user has profile
+    const profile = await Profile.findOne({ user: req.params.user_id });
+    const user = await User.findOne({ _id: req.params.user_id });
+
+    if (!profile) {
+      // if the user has no profile, just remove user
+      await User.findOneAndRemove({ _id: req.params.user_id });
+    } else {
+      // if the user has both, remove both
+      await profile.remove();
+      await user.remove();
+    }
 
     res.json({
-      msg: 'Successfully deleted the user',
+      msg: 'Successfully deleted the user and profile',
     });
   } catch (error) {
     console.error(error.message);

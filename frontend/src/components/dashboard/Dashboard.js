@@ -6,7 +6,8 @@ import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import Education from './Education';
-import { getCurrentProfile, deleteAccount } from '../../actions/profileAction';
+import { getCurrentProfile } from '../../actions/profileAction';
+import { deleteAccount } from '../../actions/userAction';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -34,14 +35,17 @@ const Dashboard = ({
           <Education education={profile.education} />
 
           <div className='my-2'>
-            <button className='btn btn-danger' onClick={() => deleteAccount()}>
+            <button
+              className='btn btn-danger'
+              onClick={() => deleteAccount(user._id)}
+            >
               <i className='fas fa-user-minus'></i> Delete my account
             </button>
           </div>
         </>
       ) : (
         <>
-          <p>I don't see your profile. Do you want to add some?</p>
+          <p>I don't see your profile. Do you want to add some info?</p>
           <Link to='/create-profile' className='btn btn-primary my-1'>
             Create profile
           </Link>

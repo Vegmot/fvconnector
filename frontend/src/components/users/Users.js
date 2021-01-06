@@ -3,17 +3,24 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import ProfileItem from './ProfileItem';
+import UserItem from './UserItem';
+import { getUsers } from '../../actions/userAction';
 import { getProfiles } from '../../actions/profileAction';
 
-const Profiles = ({
+const Users = ({
   getProfiles,
-  profile: { profiles, loading },
+  getUsers,
+  user: { users, loading },
+  profile: { profiles },
   auth: { isAuthenticated },
 }) => {
   useEffect(() => {
-    getProfiles();
-  }, [getProfiles]);
+    if (isAuthenticated) {
+      getUsers();
+      getProfiles();
+    }
+  }, [getProfiles, getUsers, isAuthenticated]);
+
   return (
     <>
       {isAuthenticated ? (
@@ -27,10 +34,10 @@ const Profiles = ({
               others
             </p>
             <div className='profiles'>
-              {profiles.length > 0 ? (
-                profiles.map(pro => <ProfileItem key={pro._id} profile={pro} />)
+              {users.length > 0 ? (
+                users.map(user => <UserItem key={user._id} user={user} />)
               ) : (
-                <h4>No profiles found</h4>
+                <h4>No users found</h4>
               )}
             </div>
           </>
@@ -42,15 +49,17 @@ const Profiles = ({
   );
 };
 
-Profiles.propTypes = {
+Users.propTypes = {
   getProfiles: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
+  user: state.userReducer,
   profile: state.profileReducer,
   auth: state.authReducer,
 });
 
-export default connect(mapStateToProps, { getProfiles })(Profiles);
+export default connect(mapStateToProps, { getProfiles, getUsers })(Users);

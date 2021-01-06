@@ -32,7 +32,7 @@ export const DELETE_POST = 'DELETE_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
-export const ADMIN_GET_USERS = 'ADMIN_GET_USERS';
-export const ADMIN_USERS_ERROR = 'ADMIN_USERS_ERROR';
-export const ADMIN_GET_PROFILES = 'ADMIN_GET_PROFILES';
-export const ADMIN_PROFILES_ERROR = 'ADMIN_PROFILES_ERROR';
+export const GET_USER = 'GET_USER';
+export const GET_USERS = 'GET_USERS';
+export const USERS_ERROR = 'USERS_ERROR';
+export const CLEAR_USERS = 'CLEAR_USERS';

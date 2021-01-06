@@ -5,18 +5,19 @@ import Register from '../auth/Register';
 import Alert from '../layout/Alert';
 import Dashboard from '../dashboard/Dashboard';
 import CreateProfile from '../profile-forms/CreateProfile';
+import AdminEditProfile from '../profile-forms/AdminEditProfile';
 import EditProfile from '../profile-forms/EditProfile';
 import AddExperience from '../profile-forms/AddExperience';
 import AddEducation from '../profile-forms/AddEducation';
-import AdminUsers from '../profiles/AdminUsers';
-import Profiles from '../profiles/Profiles';
+import AdminUsers from '../users/AdminUsers';
+import Users from '../users/Users';
 import Profile from '../profile/Profile';
 import Post from '../post/Post';
 import Posts from '../posts/Posts';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from '../routing/PrivateRoute';
 
-const Routes = props => {
+const Routes = () => {
   return (
     <section className='container'>
       <Alert />
@@ -24,10 +25,15 @@ const Routes = props => {
         <Route exact path='/register' component={Register} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/admin/users/' component={AdminUsers} />
-        <Route exact path='/profiles' component={Profiles} />
+        <Route exact path='/users' component={Users} />
         <Route exact path='/profile/:id' component={Profile} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/create-profile' component={CreateProfile} />
+        <PrivateRoute
+          exact
+          path='/admin/edit-profile'
+          component={AdminEditProfile}
+        />
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />
         <PrivateRoute exact path='/add-experience' component={AddExperience} />
         <PrivateRoute exact path='/add-education' component={AddEducation} />

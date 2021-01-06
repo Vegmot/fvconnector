@@ -3,23 +3,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const ProfileItem = ({
-  profile: {
-    user: { _id, firstName, middleName, lastName, avatar, isAdmin },
-    status,
-    company,
-    city,
-    state,
-    favourites,
-  },
+  user: { _id },
+  profile: { status, company, city, state, favourites },
 }) => {
   return (
-    <div className='profile bg-light'>
-      <img src={avatar} alt={firstName} className='round-img' />
-      <div>
-        <h2>
-          {firstName} {middleName && middleName} {lastName}{' '}
-          {isAdmin && <i className='fas fa-check'></i>}
-        </h2>
+    <>
+      <div className='profile bg-light'>
         <p>
           <i className='fas fa-seedling'></i> {status}
         </p>
@@ -36,6 +25,7 @@ const ProfileItem = ({
           View details
         </Link>
       </div>
+
       <ul>
         {favourites.slice(0, 4).map((fav, index) => (
           <li key={index} className='text-primary'>
@@ -43,11 +33,12 @@ const ProfileItem = ({
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 };
 
 ProfileItem.propTypes = {
+  user: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 };
 

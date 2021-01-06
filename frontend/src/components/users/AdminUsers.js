@@ -6,20 +6,23 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import formatDate from '../../utils/formatDate';
-import { adminGetUsers, deleteAccount } from '../../actions/profileAction';
+import { getProfiles } from '../../actions/profileAction';
+import { getUsers, deleteAccount } from '../../actions/userAction';
 
 const AdminUsers = ({
-  adminGetUsers,
+  getUsers,
+  getProfiles,
   deleteAccount,
-  profile: { profile, profiles, users, loading },
+  user: { users, loading },
+  profile: { profiles },
   auth: { isAuthenticated, user: loggedInUser },
 }) => {
   useEffect(() => {
-    adminGetUsers();
-  }, [adminGetUsers]);
-
-  console.log(users);
-  console.log(profiles);
+    if (loggedInUser.isAdmin) {
+      getUsers();
+      getProfiles();
+    }
+  }, [getUsers, getProfiles, loggedInUser]);
 
   return (
     <>
@@ -35,6 +38,7 @@ const AdminUsers = ({
                   <th>Name</th>
                   <th>Email</th>
                   <th>Member since</th>
+                  <th>Has profile</th>
                   <th>Admin</th>
                   <th></th>
                   <th></th>
@@ -47,10 +51,26 @@ const AdminUsers = ({
                       {user.firstName} {user.middleName && user.middleName}{' '}
                       {user.lastName}
                     </td>
+
                     <td>
                       <a href={`mailto:${user.email}`}>{user.email}</a>
                     </td>
+
                     <td>{formatDate(user.date)}</td>
+
+                    <td>
+                      {profiles.find(profile => profile.user === user._id) ? (
+                        <i
+                          className='fas fa-check'
+                          style={{ color: 'green' }}
+                        ></i>
+                      ) : (
+                        <i
+                          className='fas fa-times'
+                          style={{ color: 'red' }}
+                        ></i>
+                      )}
+                    </td>
 
                     <td>
                       {user.isAdmin ? (
@@ -65,6 +85,7 @@ const AdminUsers = ({
                         ></i>
                       )}
                     </td>
+
                     <td>
                       <LinkContainer
                         to={
@@ -83,7 +104,7 @@ const AdminUsers = ({
                     <td>
                       <button
                         className='btn btn-danger'
-                        onClick={() => deleteAccount()}
+                        onClick={() => deleteAccount(user._id)}
                       >
                         <i className='fas fa-times'></i>
                       </button>
@@ -104,7 +125,8 @@ const AdminUsers = ({
 };
 
 AdminUsers.propTypes = {
-  adminGetUsers: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
+  getProfiles: PropTypes.func.isRequired,
   deleteAccount: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
@@ -113,10 +135,13 @@ AdminUsers.propTypes = {
 
 const mapStateToProps = state => ({
   profile: state.profileReducer,
+  user: state.userReducer,
   auth: state.authReducer,
   admin: state.adminReducer,
 });
 
-export default connect(mapStateToProps, { adminGetUsers, deleteAccount })(
-  AdminUsers
-);
+export default connect(mapStateToProps, {
+  getUsers,
+  getProfiles,
+  deleteAccount,
+})(AdminUsers);

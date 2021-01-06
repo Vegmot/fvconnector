@@ -95,20 +95,12 @@ router.post(
   }
 );
 
-// GET api/admin/users
-// Get all users - admin
-// private/admin
-router.get('/admin', auth, async (req, res) => {
+// GET api/users
+// Get all users
+// private
+router.get('/', auth, async (req, res) => {
   try {
-    const users = await User.find().populate('user', [
-      'firstName',
-      'middleName',
-      'lastName',
-      'email',
-      'avatar',
-      'date',
-      'isAdmin',
-    ]);
+    const users = await User.find();
 
     res.json(users);
   } catch (error) {

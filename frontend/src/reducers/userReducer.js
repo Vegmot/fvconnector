@@ -1,12 +1,12 @@
 import {
-  ADMIN_GET_USERS,
-  ADMIN_GET_PROFILES,
-  ADMIN_USERS_ERROR,
-  ADMIN_PROFILES_ERROR,
+  GET_USER,
+  GET_USERS,
+  USERS_ERROR,
+  CLEAR_USERS,
 } from '../actions/types';
 
 const initialState = {
-  profiles: [],
+  user: {},
   users: [],
   loading: true,
   error: {},
@@ -14,34 +14,33 @@ const initialState = {
 
 export default function adminReducer(state = initialState, action) {
   switch (action.type) {
-    case ADMIN_GET_USERS:
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload,
+        loading: false,
+      };
+
+    case GET_USERS:
       return {
         ...state,
         users: action.payload,
         loading: false,
       };
 
-    case ADMIN_GET_PROFILES:
+    case USERS_ERROR:
       return {
         ...state,
-        profiles: action.payload,
-        loading: false,
-      };
-
-    case ADMIN_USERS_ERROR:
-      return {
-        ...state,
-        users: null,
+        user: null,
         loading: false,
         error: action.payload,
       };
 
-    case ADMIN_PROFILES_ERROR:
+    case CLEAR_USERS:
       return {
         ...state,
-        profiles: null,
+        user: null,
         loading: false,
-        error: action.payload,
       };
 
     default:

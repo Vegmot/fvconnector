@@ -32,10 +32,14 @@ const PostItem = ({
             <img
               className='round-img'
               src={avatar}
-              alt={`${firstName}'s profile avatar`}
+              alt={user ? `${firstName}'s profile avatar` : 'Deleted user'}
             />
             <h4>
-              {firstName} {middleName && middleName} {lastName}
+              {user
+                ? middleName
+                  ? firstName + ' ' + middleName + ' ' + lastName
+                  : firstName + ' ' + lastName
+                : 'Deleted user'}
             </h4>
           </Link>
         </div>
