@@ -42,7 +42,7 @@ const PostItem = ({
     } else {
       <Redirect to='/login' />;
     }
-  }, [getUsers]);
+  }, [getUsers, auth]);
 
   return (
     <>
@@ -80,7 +80,11 @@ const PostItem = ({
                   if (likes.find(like => like.user === auth.user._id)) {
                     removeLike(postId);
                   } else {
-                    addLike(postId);
+                    if (
+                      !dislikes.find(dislike => dislike.user === auth.user._id)
+                    ) {
+                      addLike(postId);
+                    }
                   }
                 }}
               >
@@ -101,7 +105,9 @@ const PostItem = ({
                   ) {
                     removeDislike(postId);
                   } else {
-                    addDislike(postId);
+                    if (!likes.find(like => like.user === auth.user._id)) {
+                      addDislike(postId);
+                    }
                   }
                 }}
               >

@@ -83,11 +83,6 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(404).json({ msg: 'Post not found' });
     }
 
-    // check if the logged in user owns the post or if the user is admin
-    if (post.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'User not authorised' });
-    }
-
     await post.remove();
 
     res.json({ msg: 'Successfully deleted the post' });
@@ -242,11 +237,6 @@ router.delete('/comments/:id/:comment_id', auth, async (req, res) => {
     // make sure the comment exists
     if (!comment) {
       return res.status(404).json({ msg: 'Comment not found' });
-    }
-
-    // check if the logged in user has written the comment
-    if (comment.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'User not authorised' });
     }
 
     // get remove Index

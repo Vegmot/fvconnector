@@ -29,7 +29,7 @@ const CommentItem = ({
     } else {
       <Redirect to='/login' />;
     }
-  }, [getUsers]);
+  }, [getUsers, auth]);
 
   return (
     <>
