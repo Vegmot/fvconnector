@@ -121,19 +121,11 @@ router.put('/like/:id', auth, async (req, res) => {
 });
 
 // PUT api/posts/unlike/:id
-// Unlike a post
+// unlike a post
 // private
 router.put('/unlike/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-
-    // check if the post has already been liked before
-    if (
-      !post.likes.filter(like => like.user.toString() === req.user.id)
-        .length === 0
-    ) {
-      return res.status(400).json({ msg: 'Unlike BEFORE like the post?' });
-    }
 
     // get remove index
     const removeIndex = post.likes
@@ -145,6 +137,53 @@ router.put('/unlike/:id', auth, async (req, res) => {
 
     await post.save();
     res.json(post.likes);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// PUT api/posts/dislike/:id
+// Disike a post
+// private
+router.put('/dislike/:id', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    // check if the post has already been disliked before
+    if (
+      post.dislikes.filter(dislike => dislike.user.toString() === req.user.id)
+        .length > 0
+    ) {
+      return res.status(400).json({ msg: 'You already disliked this post' });
+    }
+
+    post.dislikes.unshift({ user: req.user.id });
+    await post.save();
+    res.json(post.dislikes);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// PUT api/posts/undislike/:id
+// undislike a post
+// private
+router.put('/undislike/:id', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    // get remove index
+    const removeIndex = post.dislikes
+      .map(dislike => dislike.user.toString())
+      .indexOf(req.user.id);
+
+    // unlike
+    post.dislikes.splice(removeIndex, 1);
+
+    await post.save();
+    res.json(post.dislikes);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');

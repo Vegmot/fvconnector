@@ -3,6 +3,7 @@ import {
   GET_POSTS,
   POST_ERROR,
   UPDATE_LIKES,
+  UPDATE_DISLIKES,
   DELETE_POST,
   ADD_POST,
   ADD_COMMENT,
@@ -62,6 +63,16 @@ export default function postReducer(state = initialState, action) {
             : post
         ),
         loading: false,
+      };
+
+    case UPDATE_DISLIKES:
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post._id === action.payload.id
+            ? { ...post, dislikes: action.payload.dislikes }
+            : post
+        ),
       };
 
     case ADD_COMMENT:

@@ -30,6 +30,14 @@ const PostSchema = new mongoose.Schema(
         },
       },
     ],
+    dislikes: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'users',
+        },
+      },
+    ],
     comments: [
       {
         user: {

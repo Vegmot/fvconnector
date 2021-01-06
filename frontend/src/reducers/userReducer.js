@@ -12,7 +12,7 @@ const initialState = {
   error: {},
 };
 
-export default function adminReducer(state = initialState, action) {
+export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
       return {

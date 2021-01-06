@@ -154,20 +154,6 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-/* // GET api/admin/profiles
-// Get all profiles - admin
-// private/admin
-router.get('/admin', auth, async (req, res) => {
-  try {
-    const profiles = await Profile.find();
-
-    res.json(profiles);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Server error');
-  }
-}); */
-
 // GET api/profile/user/:user_id
 // Get a certain user's profile by id
 // public

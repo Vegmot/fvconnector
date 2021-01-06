@@ -1,42 +1,63 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteComment } from '../../actions/postAction';
 import formatDate from '../../utils/formatDate';
+import { getUsers } from '../../actions/userAction';
 
 const CommentItem = ({
   postId,
-  comment: { _id, text, firstName, middleName, lastName, avatar, user, date },
+  comment: {
+    _id: commentId,
+    text,
+    firstName,
+    middleName,
+    lastName,
+    avatar,
+    user,
+    date,
+  },
   auth,
+  user: { users: registeredUsers },
+  getUsers,
   deleteComment,
 }) => {
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      getUsers();
+    } else {
+      <Redirect to='/login' />;
+    }
+  }, [getUsers]);
+
   return (
     <>
       <div className='post bg-white p-1 my-1'>
         <div>
           <Link to={`/profile/${user}`}>
-            <img
-              className='round-img'
-              src={avatar}
-              alt={firstName ? `${firstName}'s profile avatar` : 'Deleted user'}
-            />
+            <img className='round-img' src={avatar} alt='Profile avatar' />
             <h4>
-              {firstName
-                ? middleName
-                  ? firstName + ' ' + middleName + ' ' + lastName
-                  : firstName + ' ' + lastName
-                : 'Deleted user'}
+              {registeredUsers.find(rUser => rUser._id === user) ? (
+                middleName ? (
+                  firstName + ' ' + middleName + ' ' + lastName
+                ) : (
+                  firstName + ' ' + lastName
+                )
+              ) : (
+                <span className='deleted-user'>- Deleted user -</span>
+              )}
             </h4>
           </Link>
         </div>
+
         <div>
           <p className='my-1'>{text}</p>
           <p className='post-date'>Posted on {formatDate(date)}</p>
 
           {!auth.loading && (user === auth.user._id || auth.user.isAdmin) && (
             <button
-              onClick={e => deleteComment(postId, _id)}
+              onClick={e => deleteComment(postId, commentId)}
               type='button'
               className='btn btn-danger'
             >
@@ -53,11 +74,15 @@ CommentItem.propTypes = {
   postId: PropTypes.number.isRequired,
   comment: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  getUsers: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.authReducer,
+  user: state.userReducer,
 });
 
-export default connect(mapStateToProps, { deleteComment })(CommentItem);
+export default connect(mapStateToProps, { getUsers, deleteComment })(
+  CommentItem
+);
