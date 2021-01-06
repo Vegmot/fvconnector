@@ -6,6 +6,7 @@ import {
   USERS_ERROR,
   CLEAR_USERS,
   DELETE_ACCOUNT,
+  ADMIN_DELETE_ACCOUNT,
 } from './types';
 
 // get all users / admin
@@ -56,8 +57,28 @@ export const deleteAccount = userId => async dispatch => {
     try {
       await axios.delete(`/api/profile/user/${userId}`);
 
-      dispatch({ type: CLEAR_USERS });
       dispatch({ type: DELETE_ACCOUNT });
+
+      dispatch(setAlert('Deleted account', 'success'));
+    } catch (error) {
+      dispatch({
+        type: USERS_ERROR,
+        payload: {
+          msg: error.response.statusText,
+          status: error.response.status,
+        },
+      });
+    }
+  }
+};
+
+// delete account & profile - admin
+export const adminDeleteAccount = userId => async dispatch => {
+  if (window.confirm('Are you sure? This cannot be undone.')) {
+    try {
+      await axios.delete(`/api/profile/user/${userId}`);
+
+      dispatch({ type: ADMIN_DELETE_ACCOUNT, payload: userId });
 
       dispatch(setAlert('Deleted account', 'success'));
     } catch (error) {

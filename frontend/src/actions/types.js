@@ -20,6 +20,7 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
+export const ADMIN_DELETE_ACCOUNT = 'ADMIN_DELETE_ACCOUNT';
 
 export const GET_POST = 'GET_POST';
 export const GET_POSTS = 'GET_POSTS';

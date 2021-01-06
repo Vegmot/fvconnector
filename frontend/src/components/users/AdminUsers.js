@@ -7,12 +7,12 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import formatDate from '../../utils/formatDate';
 import { getProfiles } from '../../actions/profileAction';
-import { getUsers, deleteAccount } from '../../actions/userAction';
+import { getUsers, adminDeleteAccount } from '../../actions/userAction';
 
 const AdminUsers = ({
   getUsers,
   getProfiles,
-  deleteAccount,
+  adminDeleteAccount,
   user: { users, loading },
   profile: { profiles },
   auth: { isAuthenticated, user: loggedInUser },
@@ -104,7 +104,7 @@ const AdminUsers = ({
                     <td>
                       <button
                         className='btn btn-danger'
-                        onClick={() => deleteAccount(user._id)}
+                        onClick={e => adminDeleteAccount(user._id)}
                       >
                         <i className='fas fa-times'></i>
                       </button>
@@ -127,7 +127,7 @@ const AdminUsers = ({
 AdminUsers.propTypes = {
   getUsers: PropTypes.func.isRequired,
   getProfiles: PropTypes.func.isRequired,
-  deleteAccount: PropTypes.func.isRequired,
+  adminDeleteAccount: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired,
@@ -143,5 +143,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getUsers,
   getProfiles,
-  deleteAccount,
+  adminDeleteAccount,
 })(AdminUsers);

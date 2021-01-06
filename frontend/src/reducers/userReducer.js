@@ -3,6 +3,7 @@ import {
   GET_USERS,
   USERS_ERROR,
   CLEAR_USERS,
+  ADMIN_DELETE_ACCOUNT,
 } from '../actions/types';
 
 const initialState = {
@@ -34,6 +35,13 @@ export default function userReducer(state = initialState, action) {
         user: null,
         loading: false,
         error: action.payload,
+      };
+
+    case ADMIN_DELETE_ACCOUNT:
+      return {
+        ...state,
+        users: state.users.filter(user => user._id !== action.payload),
+        loading: false,
       };
 
     case CLEAR_USERS:

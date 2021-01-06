@@ -14,6 +14,7 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  users: [],
 };
 
 export default function authReducer(state = initialState, action) {
