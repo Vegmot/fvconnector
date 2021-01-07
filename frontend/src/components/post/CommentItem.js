@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteComment } from '../../actions/postAction';
 import formatDate from '../../utils/formatDate';
-import { getUsers } from '../../actions/userAction';
 
 const CommentItem = ({
   postId,
@@ -20,17 +19,8 @@ const CommentItem = ({
   },
   auth,
   user: { users: registeredUsers },
-  getUsers,
   deleteComment,
 }) => {
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      getUsers();
-    } else {
-      <Redirect to='/login' />;
-    }
-  }, [getUsers, auth]);
-
   return (
     <>
       <div className='post bg-white p-1 my-1'>
@@ -74,7 +64,6 @@ CommentItem.propTypes = {
   postId: PropTypes.number.isRequired,
   comment: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  getUsers: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
 };
 
@@ -83,6 +72,4 @@ const mapStateToProps = state => ({
   user: state.userReducer,
 });
 
-export default connect(mapStateToProps, { getUsers, deleteComment })(
-  CommentItem
-);
+export default connect(mapStateToProps, { deleteComment })(CommentItem);

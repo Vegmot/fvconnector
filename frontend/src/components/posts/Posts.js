@@ -5,11 +5,13 @@ import Spinner from '../layout/Spinner';
 import PostItem from './PostItem';
 import PostForm from './PostForm';
 import { getPosts } from '../../actions/postAction';
+import { getUsers } from '../../actions/userAction';
 
-const Posts = ({ getPosts, post: { loading, posts } }) => {
+const Posts = ({ getUsers, getPosts, post: { loading, posts } }) => {
   useEffect(() => {
+    getUsers();
     getPosts();
-  }, [getPosts]);
+  }, [getUsers, getPosts]);
 
   return loading ? (
     <Spinner />
@@ -30,12 +32,14 @@ const Posts = ({ getPosts, post: { loading, posts } }) => {
 };
 
 Posts.propTypes = {
+  getUsers: PropTypes.func.isRequired,
   getPosts: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   post: state.postReducer,
+  user: state.userReducer,
 });
 
-export default connect(mapStateToProps, { getPosts })(Posts);
+export default connect(mapStateToProps, { getUsers, getPosts })(Posts);

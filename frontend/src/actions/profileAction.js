@@ -111,41 +111,6 @@ export const createProfile = (
   }
 };
 
-export const adminEditProfile = (userId, formData) => async dispatch => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const res = await axios.put(
-      `/api/profile/user/${userId}`,
-      formData,
-      config
-    );
-
-    dispatch({
-      type: GET_PROFILE,
-      payload: res.data,
-    });
-
-    dispatch(setAlert('Profile updated', 'success'));
-  } catch (error) {
-    const errors = error.response.data.errors;
-    if (errors) {
-      errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
-    }
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
-      },
-    });
-  }
-};
-
 export const addExperience = (formData, history) => async dispatch => {
   try {
     const config = {

@@ -4,17 +4,19 @@ import { Table } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alertAction';
 import Spinner from '../layout/Spinner';
 import formatDate from '../../utils/formatDate';
-import { getProfiles } from '../../actions/profileAction';
+import { getProfileById, getProfiles } from '../../actions/profileAction';
 import { getUsers, adminDeleteAccount } from '../../actions/userAction';
 
 const AdminUsers = ({
   getUsers,
   getProfiles,
+  getProfileById,
   adminDeleteAccount,
   user: { users, loading },
-  profile: { profiles },
+  profile: { profile, profiles },
   auth: { isAuthenticated, user: loggedInUser },
 }) => {
   useEffect(() => {
@@ -90,9 +92,12 @@ const AdminUsers = ({
                       <LinkContainer
                         to={
                           loggedInUser.isAdmin ? (
-                            `/profile/${user._id}`
+                            `/admin/edit-profile/${user._id}`
                           ) : (
-                            <Redirect to='/login' />
+                            <>
+                              <Redirect to='/dashboard' />
+                              {setAlert('Not authorised as admin', 'danger')}
+                            </>
                           )
                         }
                       >
@@ -126,6 +131,7 @@ const AdminUsers = ({
 
 AdminUsers.propTypes = {
   getUsers: PropTypes.func.isRequired,
+  getProfileById: PropTypes.func.isRequired,
   getProfiles: PropTypes.func.isRequired,
   adminDeleteAccount: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
@@ -142,6 +148,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getUsers,
+  getProfileById,
   getProfiles,
   adminDeleteAccount,
 })(AdminUsers);

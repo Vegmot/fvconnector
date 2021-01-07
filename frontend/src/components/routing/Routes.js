@@ -31,7 +31,7 @@ const Routes = () => {
         <PrivateRoute exact path='/create-profile' component={CreateProfile} />
         <PrivateRoute
           exact
-          path='/admin/edit-profile'
+          path='/admin/edit-profile/:id'
           component={AdminEditProfile}
         />
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />

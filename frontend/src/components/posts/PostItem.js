@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   addLike,
@@ -9,11 +9,10 @@ import {
   removeDislike,
   deletePost,
 } from '../../actions/postAction';
-import { getUsers } from '../../actions/userAction';
+
 import formatDate from '../../utils/formatDate';
 
 const PostItem = ({
-  getUsers,
   addLike,
   removeLike,
   addDislike,
@@ -36,14 +35,6 @@ const PostItem = ({
   },
   showActions,
 }) => {
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      getUsers();
-    } else {
-      <Redirect to='/login' />;
-    }
-  }, [getUsers, auth]);
-
   return (
     <>
       <div className='post bg-white p-1 my-1'>
@@ -149,7 +140,6 @@ PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  getUsers: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
   addDislike: PropTypes.func.isRequired,
@@ -164,7 +154,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getUsers,
   addLike,
   removeLike,
   addDislike,

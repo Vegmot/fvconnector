@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Link, withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  adminEditProfile,
-  getCurrentProfile,
-} from '../../actions/profileAction';
+import { setAlert } from '../../actions/alertAction';
+import { createProfile, getProfileById } from '../../actions/profileAction';
 
 const AdminEditProfile = ({
   match,
+  history,
   profile: { profile, loading },
   auth: { isAuthenticated, user: loggedInUser },
-  adminEditProfile,
-  getCurrentProfile,
+  createProfile,
+  getProfileById,
 }) => {
   const userId = match.params.id;
 
@@ -34,7 +33,7 @@ const AdminEditProfile = ({
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
   useEffect(() => {
-    getCurrentProfile();
+    getProfileById(userId);
 
     setFormData({
       company: loading || !profile.company ? '' : profile.company,
@@ -50,7 +49,7 @@ const AdminEditProfile = ({
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading, getCurrentProfile]);
+  }, [getProfileById, loading]);
 
   const {
     company,
@@ -72,14 +71,14 @@ const AdminEditProfile = ({
 
   const submitHandler = e => {
     e.preventDefault();
-    adminEditProfile(userId, formData);
+    createProfile(formData, history, true);
   };
 
   return (
     <>
       {isAuthenticated && loggedInUser.isAdmin ? (
         <>
-          <h1 className='large text-primary'>Edit profile</h1>
+          <h1 className='large text-primary'>Edit user profile</h1>
 
           <small>*: Required | FV: Fruits and Veggies</small>
           <form className='form' onSubmit={e => submitHandler(e)}>
@@ -265,15 +264,18 @@ const AdminEditProfile = ({
           </form>
         </>
       ) : (
-        <Redirect to='/login' />
+        <>
+          <Redirect to='/dashboard' />
+          {setAlert('Not authorised as admin', 'danger')}
+        </>
       )}
     </>
   );
 };
 
 AdminEditProfile.propTypes = {
-  adminEditProfile: PropTypes.func.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired,
+  createProfile: PropTypes.func.isRequired,
+  getProfileById: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -285,6 +287,6 @@ const mapStateToProps = state => ({
 
 // withRouter is needed as we are using history.push
 export default connect(mapStateToProps, {
-  adminEditProfile,
-  getCurrentProfile,
+  createProfile,
+  getProfileById,
 })(withRouter(AdminEditProfile));
