@@ -7,7 +7,6 @@ import { createProfile, getProfileById } from '../../actions/profileAction';
 
 const AdminEditProfile = ({
   match,
-  history,
   profile: { profile, loading },
   auth: { isAuthenticated, user: loggedInUser },
   createProfile,
@@ -71,7 +70,7 @@ const AdminEditProfile = ({
 
   const submitHandler = e => {
     e.preventDefault();
-    createProfile(userId, formData, history, true);
+    createProfile(userId, formData, true);
   };
 
   return (
@@ -275,6 +274,7 @@ const AdminEditProfile = ({
 
 AdminEditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
+  getUserById: PropTypes.func.isRequired,
   getProfileById: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,

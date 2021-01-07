@@ -1,18 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getProfiles } from '../../actions/profileAction';
 
 const UserItem = ({
   user: { _id, avatar, firstName, middleName, lastName, isAdmin },
   profile: { profiles },
-  getProfiles,
 }) => {
-  useEffect(() => {
-    getProfiles();
-  }, [getProfiles]);
-
   return (
     <>
       <div className='user profile bg-light'>
@@ -68,11 +62,10 @@ const UserItem = ({
 UserItem.propTypes = {
   user: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
-  getProfiles: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   profile: state.profileReducer,
 });
 
-export default connect(mapStateToProps, { getProfiles })(UserItem);
+export default connect(mapStateToProps)(UserItem);

@@ -35,6 +35,16 @@ const PostItem = ({
   },
   showActions,
 }) => {
+  /*
+@ todo list
+what I am trying to achieve: display the names of users who like/dislike the post.
+example: {firstName}, {firstName} like this post. / {firstName} dislikes this post.
+if a post has more than 4 (dis)likes, it has to display differently: {firstName}, {firstName} and {numRest} others like this post.
+
+1: reach User model using users' id in likes array(like => like.user) by also using the ref 'users'
+2: get the firstName(s) that correspond to each id
+3: I should finally return the firstNames of _ids in likes array.
+*/
   return (
     <>
       <div className='post bg-white p-1 my-1'>
@@ -49,11 +59,12 @@ const PostItem = ({
                   firstName + ' ' + lastName
                 )
               ) : (
-                <span className='deleted-user'>- Deleted user -</span>
+                <span className='deleted-user'>&#40;Deleted user&#41;</span>
               )}
             </h4>
           </Link>
         </div>
+
         <div>
           <p className='my-1'>{text}</p>
           <p className='post-date'>Posted on {formatDate(date)}</p>
@@ -124,6 +135,12 @@ const PostItem = ({
                   <i className='fas fa-times'></i>
                 </button>
               )}
+              <p>{likes.length > 0 ? likes.map(like => like.user) : 'None'}</p>
+              <p>
+                {dislikes.length > 0
+                  ? dislikes.map(dislike => dislike.user)
+                  : 'None'}
+              </p>
             </>
           )}
         </div>

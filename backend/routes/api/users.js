@@ -42,15 +42,9 @@ router.post(
           .json({ errors: [{ msg: 'User already exists' }] });
       }
 
-      // get user's gravatar
-      const avatar = normalize(
-        gravatar.url(email, {
-          s: '200', //size
-          r: 'pg', //rating
-          d: 'mm', // ?
-        }),
-        { forceHttps: true }
-      );
+      // set user's avatar
+      const imageNumber = await User.countDocuments({});
+      const avatar = `https://i.pravatar.cc/250?img=${imageNumber}`;
 
       user = new User({
         firstName:
