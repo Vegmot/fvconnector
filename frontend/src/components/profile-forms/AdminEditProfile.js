@@ -71,7 +71,7 @@ const AdminEditProfile = ({
 
   const submitHandler = e => {
     e.preventDefault();
-    createProfile(formData, history, true);
+    createProfile(userId, formData, history, true);
   };
 
   return (

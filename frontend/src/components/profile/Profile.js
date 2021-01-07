@@ -34,7 +34,7 @@ const Profile = ({ match, getProfileById, profile: { profile }, auth }) => {
             auth.user._id === profile.user._id) ||
             (auth.user.isAdmin && (
               <Link
-                to={`/admin/edit-profile/${profile._id}`}
+                to={`/admin/edit-profile/${profile.user._id}`}
                 className='btn btn-primary'
               >
                 Edit profile

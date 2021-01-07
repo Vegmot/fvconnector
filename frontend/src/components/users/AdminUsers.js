@@ -92,7 +92,7 @@ const AdminUsers = ({
                       <LinkContainer
                         to={
                           loggedInUser.isAdmin ? (
-                            `/admin/edit-profile/${user._id}`
+                            `/profile/${user._id}`
                           ) : (
                             <>
                               <Redirect to='/dashboard' />
@@ -102,7 +102,7 @@ const AdminUsers = ({
                         }
                       >
                         <button className='btn btn-primary'>
-                          <i className='fas fa-edit'></i>
+                          <i className='fas fa-info-circle'></i>
                         </button>
                       </LinkContainer>
                     </td>

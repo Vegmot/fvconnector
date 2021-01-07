@@ -27,9 +27,8 @@ const UserItem = ({
               .filter(profile => profile.user === _id)
               .map(pro => (
                 <>
-                  <p>
-                    {pro.status} {pro.company && <span> at {pro.company}</span>}
-                  </p>
+                  <p>{pro.status}</p>
+                  <p>{pro.company && <span>Working at {pro.company}</span>}</p>
                   <p>
                     {pro.city ? (
                       <span>

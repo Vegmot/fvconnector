@@ -39,7 +39,7 @@ router.get('/myprofile', auth, async (req, res) => {
 // Create/update user profile
 // private
 router.post(
-  '/',
+  '/:userId',
   [
     auth,
     [
@@ -72,7 +72,7 @@ router.post(
 
     // build profile object
     const profileFields = {
-      user: req.user.id,
+      user: req.params.userId,
       website:
         website && website !== ''
           ? normalize(website, {
@@ -120,7 +120,7 @@ router.post(
       // using upsert option (creates new doc if no match is found)
       let profile = await Profile.findOneAndUpdate(
         {
-          user: req.user.id,
+          user: req.params.userId,
         },
         {
           $set: profileFields,

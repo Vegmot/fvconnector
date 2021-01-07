@@ -22,9 +22,8 @@ const ProfileTop = ({
       <h1 className='large'>
         {firstName} {middleName && middleName} {lastName}
       </h1>
-      <p className='lead'>
-        {status} {company && <span> at {company}</span>}
-      </p>
+      <p className='lead'>{status}</p>
+      <p className='lead'>{company && <span>Working at {company}</span>}</p>
       <p>{state && city ? city + ', ' + state : state}</p>
 
       <div className='icons my-1'>

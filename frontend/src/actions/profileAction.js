@@ -73,6 +73,7 @@ export const getProfileById = userId => async dispatch => {
 // create or update profile
 //    edit = false: to check if a profile is being created or updated
 export const createProfile = (
+  userId,
   formData,
   history,
   edit = false
@@ -84,10 +85,10 @@ export const createProfile = (
       },
     };
 
-    const res = await axios.post('/api/profile', formData, config);
+    const res = await axios.post(`/api/profile/${userId}`, formData, config);
 
     dispatch({
-      type: GET_PROFILE,
+      type: UPDATE_PROFILE,
       payload: res.data,
     });
 
