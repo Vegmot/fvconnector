@@ -4,7 +4,6 @@ import normalize from 'normalize-url';
 import { auth } from '../../middleware/auth.js';
 import User from '../../models/User.js';
 import Profile from '../../models/Profile.js';
-import Post from '../../models/Post.js';
 import { check, validationResult } from 'express-validator';
 
 // GET api/profile/myprofile

@@ -35,16 +35,33 @@ const PostItem = ({
   },
   showActions,
 }) => {
-  /*
-@ todo list
-what I am trying to achieve: display the names of users who like/dislike the post.
-example: {firstName}, {firstName} like this post. / {firstName} dislikes this post.
-if a post has more than 4 (dis)likes, it has to display differently: {firstName}, {firstName} and {numRest} others like this post.
+  const likeUsers = [];
+  const dislikeUsers = [];
+  const deletedUsers = [];
 
-1: reach User model using users' id in likes array(like => like.user) by also using the ref 'users'
-2: get the firstName(s) that correspond to each id
-3: I should finally return the firstNames of _ids in likes array.
-*/
+  function getLikeUsers() {
+    likes.map(like => {
+      registeredUsers.map(rUser => {
+        if (rUser._id === like.user) {
+          likeUsers.push(rUser.firstName);
+        }
+      });
+    });
+  }
+
+  function getDislikeUsers() {
+    dislikes.map(dislike => {
+      registeredUsers.map(rUser => {
+        if (rUser._id === dislike.user) {
+          dislikeUsers.push(rUser.firstName);
+        }
+      });
+    });
+  }
+
+  getLikeUsers();
+  getDislikeUsers();
+
   return (
     <>
       <div className='post bg-white p-1 my-1'>
@@ -135,6 +152,26 @@ if a post has more than 4 (dis)likes, it has to display differently: {firstName}
                   <i className='fas fa-times'></i>
                 </button>
               )}
+
+              <div className='likeUsers'>
+                <small>
+                  {likes.length > 0
+                    ? likes.length === 1
+                      ? likeUsers.join(', ') + ' likes this post.'
+                      : likeUsers.join(', ') + ' like this post.'
+                    : ''}
+                </small>
+              </div>
+
+              <div className='dislikeUsers'>
+                <small>
+                  {dislikes.length > 0
+                    ? dislikes.length === 1
+                      ? dislikeUsers.join(', ') + ' dislikes this post.'
+                      : dislikeUsers.join(', ') + ' dislike this post.'
+                    : ''}
+                </small>
+              </div>
             </>
           )}
         </div>

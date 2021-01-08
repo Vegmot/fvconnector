@@ -29,6 +29,8 @@ export const GET_POSTS = 'GET_POSTS';
 export const POST_ERROR = 'POST_ERROR';
 export const UPDATE_LIKES = 'UPDATE_LIKES';
 export const UPDATE_DISLIKES = 'UPDATE_DISLIKES';
+export const GET_LIKE_USERS = 'GET_LIKE_USERS';
+export const GET_DISLIKE_USERS = 'GET_DISLIKE_USERS';
 
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';

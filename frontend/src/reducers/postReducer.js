@@ -13,6 +13,7 @@ import {
 const initialState = {
   posts: [],
   post: null,
+  users: [],
   loading: true,
   error: {},
 };
