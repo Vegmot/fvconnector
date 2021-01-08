@@ -98,6 +98,10 @@ router.delete('/:id', auth, async (req, res) => {
 router.put('/like/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    const likeUsers = await Post.findById(req.params.id).populate(
+      'users',
+      'firstName'
+    );
 
     // check if the post has already been liked before
     if (
@@ -108,6 +112,7 @@ router.put('/like/:id', auth, async (req, res) => {
 
     post.likes.unshift({ user: req.user.id });
     await post.save();
+    console.log(likeUsers);
     res.json(post.likes);
   } catch (error) {
     console.error(error.message);

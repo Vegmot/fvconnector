@@ -135,12 +135,6 @@ if a post has more than 4 (dis)likes, it has to display differently: {firstName}
                   <i className='fas fa-times'></i>
                 </button>
               )}
-              <p>{likes.length > 0 ? likes.map(like => like.user) : 'None'}</p>
-              <p>
-                {dislikes.length > 0
-                  ? dislikes.map(dislike => dislike.user)
-                  : 'None'}
-              </p>
             </>
           )}
         </div>
