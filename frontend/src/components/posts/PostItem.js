@@ -37,7 +37,6 @@ const PostItem = ({
 }) => {
   const likeUsers = [];
   const dislikeUsers = [];
-  const deletedUsers = [];
 
   function getLikeUsers() {
     likes.map(like => {

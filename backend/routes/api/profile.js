@@ -4,6 +4,7 @@ import normalize from 'normalize-url';
 import { auth } from '../../middleware/auth.js';
 import User from '../../models/User.js';
 import Profile from '../../models/Profile.js';
+import Post from '../../models/Post.js';
 import { check, validationResult } from 'express-validator';
 
 // GET api/profile/myprofile
@@ -188,17 +189,52 @@ router.delete('/user/:user_id', auth, async (req, res) => {
   try {
     /* // Remove user posts
     I would rather keep the posts even if the user gets deleted
-    await Post.deleteMany({ user: req.user.id }); */
+    await Post.deleteMany({ user: req.user.id });
+    But at least I'll have the (dis)likes removed, as it affects the number of (dis)likes
+    */
 
     // check if the user has profile
     const profile = await Profile.findOne({ user: req.params.user_id });
     const user = await User.findOne({ _id: req.params.user_id });
 
+    // reset avatar first
+    await User.findOneAndUpdate(
+      { _id: req.params.user_id },
+      {
+        avatar:
+          'https://gravatar.com/avatar/a9a5b0968dbea215c3fc8dd56c0234a5?d=mm&r=pg&s=200',
+      },
+      { new: true }
+    );
+
+    // remove all likes and dislikes
+    // if the deleted user hasn't posted anything before
+    // search her/his id from all the posts
+    const posts =
+      (await Post.find({ user: req.params.user_id }).length) > 0
+        ? await Post.find({ user: req.params.user_id })
+        : await Post.find({});
+
+    const likeRemoveIndex = posts.map(post =>
+      post.likes.map(like => like.user.toString()).indexOf(req.params.user_id)
+    );
+    const dislikeRemoveIndex = posts.map(post =>
+      post.dislikes
+        .map(dislike => dislike.user.toString())
+        .indexOf(req.params.user_id)
+    );
+
     if (!profile) {
-      // if the user has no profile, just remove user
+      // if the user has no profile, just remove user, likes and dislikes
+      posts.map(post => post.likes.splice(likeRemoveIndex, 1));
+      posts.map(post => post.dislikes.splice(dislikeRemoveIndex, 1));
+      await posts.map(post => post.save());
       await User.findOneAndRemove({ _id: req.params.user_id });
     } else {
-      // if the user has both, remove both
+      // if the user has both, remove both as well as likes and dislikes
+      post.likes.splice(likeRemoveIndex, 1);
+      post.dislikes.splice(dislikeRemoveIndex, 1);
+      await post.save();
       await profile.remove();
       await user.remove();
     }
